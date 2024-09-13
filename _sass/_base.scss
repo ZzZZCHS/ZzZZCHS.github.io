@@ -14,10 +14,18 @@ body {
   color: $text-color;
   font-family: $global-font-family;
   line-height: 1.5;
+  display: flex; // Added for flexbox layout
+  flex-direction: column; // Stack children vertically
+  min-height: 100vh; // Ensure body takes up the full viewport height
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
     overflow: hidden;
+  }
+  .visitor-map {
+    margin-top: auto; // Pushes the map to the bottom
+    text-align: center; // Centers the map horizontally
+    padding: 10px; // Optional: Add some padding
   }
 }
 

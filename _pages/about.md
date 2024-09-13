@@ -19,4 +19,6 @@ redirect_from:
 
 <!-- {% include_relative includes/others.md %} -->
 
-<script type='text/javascript' id='mapmyvisitors' src='https://mapmyvisitors.com/map.js?cl=080808&w=300&t=n&d=fYCrZNCvpFifgkfasztQwZDOR21NJab0PJ5_nGtQ1XA&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353'></script>
+<div class="visitor-map">
+  <script type='text/javascript' id='mapmyvisitors' src='https://mapmyvisitors.com/map.js?cl=080808&w=300&t=n&d=fYCrZNCvpFifgkfasztQwZDOR21NJab0PJ5_nGtQ1XA&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353'></script>
+</div>
