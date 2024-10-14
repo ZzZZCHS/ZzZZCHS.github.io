@@ -10,7 +10,7 @@
 **Haifeng Huang**, Yilun Chen, Zehan Wang, Rongjie Huang, Runsen Xu, Tai Wang, Luping Liu, Xize Cheng, Yang Zhao, Jiangmiao Pang, Zhou Zhao
 
 - Chat-Scene is a 3D LLM which processes both point clouds and multi-view images for 3D scene understanding, excelling in tasks such as 3D grounding, captioning, and question answering.
-- (Sept. 2024) Ranked 1st on the grounding benchmark [ScanRefer](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_localization) and the captioning benchmark [Scan2Cap](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_captioning).
+- (Sep. 2024) Ranked 1st on the grounding benchmark [ScanRefer](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_localization) and the captioning benchmark [Scan2Cap](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_captioning).
 
 </div>
 </div>
