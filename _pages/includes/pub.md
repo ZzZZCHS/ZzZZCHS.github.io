@@ -2,6 +2,22 @@
 # 📝 Publications 
 
 
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[RoboGround: Robotic Manipulation with Grounded Vision-Language Priors.](https://openaccess.thecvf.com/content/CVPR2025/html/Huang_RoboGround_Robotic_Manipulation_with_Grounded_Vision-Language_Priors_CVPR_2025_paper.html) [![](https://img.shields.io/github/stars/ZzZZCHS/RoboGround?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/RoboGround)
+
+**Haifeng Huang**, Xinyi Chen, Yilun Chen, Hao Li, Xiaoshen Han, Zehan Wang, Tai Wang, Jiangmiao Pang, Zhou Zhao
+
+- Create a large-scale simulated robotic manipulation dataset with a diverse set of objects and instructions (24K demonstrations, 112K instructions, and 3,526 unique objects from 176 categories).
+- Develop a grounding-aware robotic manipulation policy that leverages grounding masks as an intermediate representation to guide policy networks in object manipulation tasks.
+
+</div>
+</div>
+
+
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">NeurIPS 2024</div><img src='images/chat-scene.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
