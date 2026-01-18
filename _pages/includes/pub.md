@@ -32,7 +32,7 @@
 </div>
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Arxiv 2024</div><img src='images/grounded-3dllm.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arXiv 2024</div><img src='images/grounded-3dllm.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Grounded 3D-LLM with Referent Tokens.](https://groundedscenellm.github.io/grounded_3d-llm.github.io/) [![](https://img.shields.io/github/stars/OpenRobotLab/Grounded_3D-LLM?style=social&label=Code+Stars)](https://github.com/OpenRobotLab/Grounded_3D-LLM)
@@ -46,7 +46,7 @@ Yilun Chen\*, Shuai Yang\*, **Haifeng Huang\***, Tai Wang, Ruiyuan Lyu, Runsen X
 </div>
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Arxiv 2023</div><img src='images/chat-3d.png' alt="sym" width="50%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">NAACL 2025</div><img src='images/chat-3d.png' alt="sym" width="50%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Chat-3D: Data-efficiently Tuning Large Language Model for Universal Dialogue of 3D Scenes.](https://chat-3d.github.io/) [![](https://img.shields.io/github/stars/Chat-3D/Chat-3D?style=social&label=Code+Stars)](https://github.com/Chat-3D/Chat-3D)
