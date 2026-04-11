@@ -2,6 +2,31 @@
 # 📝 Publications 
 
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arXiv 2026</div><img src='images/kitoke.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[KiToke: Kernel-based Interval-aware Token Compression for Video Large Language Models.](https://arxiv.org/abs/2604.03414)
+
+**Haifeng Huang**, Yang Li
+
+- KiToke is a training-free method that compresses video tokens by removing global redundancy while preserving temporal coherence for efficient Video LLM inference.
+
+</div>
+</div>
+
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Chat-Scene++: Exploiting Context-Rich Object Identification for 3D LLM.](https://arxiv.org/abs/2603.27507) [![](https://img.shields.io/github/stars/ZzZZCHS/Chat-Scene?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/Chat-Scene)
+
+**Haifeng Huang**, Yilun Chen, Zehan Wang, Jiangmiao Pang, Zhou Zhao
+
+- Chat-Scene++ is a unified 3D LLM framework that models 3D scenes as sequences of context-rich objects with explicit identifiers, enabling accurate grounding, reasoning, and interaction across diverse 3D vision-language tasks without task-specific tuning.
+
+</div>
+</div>
+
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
@@ -10,8 +35,7 @@
 
 **Haifeng Huang**, Xinyi Chen, Yilun Chen, Hao Li, Xiaoshen Han, Zehan Wang, Tai Wang, Jiangmiao Pang, Zhou Zhao
 
-- Create a large-scale simulated robotic manipulation dataset with a diverse set of objects and instructions (24K demonstrations, 112K instructions, and 3,526 unique objects from 176 categories).
-- Develop a grounding-aware robotic manipulation policy that leverages grounding masks as an intermediate representation to guide policy networks in object manipulation tasks.
+- Create a large-scale simulated robotic manipulation dataset and develop a grounding-aware policy that uses grounding masks to guide object manipulation.
 
 </div>
 </div>
