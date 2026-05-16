@@ -28,7 +28,7 @@
 </div>
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
+<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors.](https://openaccess.thecvf.com/content/CVPR2025/html/Huang_RoboGround_Robotic_Manipulation_with_Grounded_Vision-Language_Priors_CVPR_2025_paper.html) [![](https://img.shields.io/github/stars/ZzZZCHS/RoboGround?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/RoboGround)
@@ -38,7 +38,7 @@
 - Create a large-scale simulated robotic manipulation dataset and develop a grounding-aware policy that uses grounding masks to guide object manipulation.
 
 </div>
-</div>
+</div> -->
 
 
 
