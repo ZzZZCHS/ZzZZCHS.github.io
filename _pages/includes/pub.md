@@ -15,7 +15,7 @@
 </div>
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
+<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Chat-Scene++: Exploiting Context-Rich Object Identification for 3D LLM.](https://arxiv.org/abs/2603.27507) [![](https://img.shields.io/github/stars/ZzZZCHS/Chat-Scene?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/Chat-Scene)
@@ -25,7 +25,7 @@
 - Chat-Scene++ is a unified 3D LLM framework that models 3D scenes as sequences of context-rich objects with explicit identifiers, enabling accurate grounding, reasoning, and interaction across diverse 3D vision-language tasks without task-specific tuning.
 
 </div>
-</div>
+</div> -->
 
 
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
