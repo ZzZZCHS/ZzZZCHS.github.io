@@ -15,7 +15,7 @@
 </div>
 
 
-<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [Chat-Scene++: Exploiting Context-Rich Object Identification for 3D LLM.](https://arxiv.org/abs/2603.27507) [![](https://img.shields.io/github/stars/ZzZZCHS/Chat-Scene?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/Chat-Scene)
@@ -25,10 +25,10 @@
 - Chat-Scene++ is a unified 3D LLM framework that models 3D scenes as sequences of context-rich objects with explicit identifiers, enabling accurate grounding, reasoning, and interaction across diverse 3D vision-language tasks without task-specific tuning.
 
 </div>
-</div> -->
+</div>
 
 
-<!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [RoboGround: Robotic Manipulation with Grounded Vision-Language Priors.](https://openaccess.thecvf.com/content/CVPR2025/html/Huang_RoboGround_Robotic_Manipulation_with_Grounded_Vision-Language_Priors_CVPR_2025_paper.html) [![](https://img.shields.io/github/stars/ZzZZCHS/RoboGround?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/RoboGround)
@@ -38,7 +38,7 @@
 - Create a large-scale simulated robotic manipulation dataset and develop a grounding-aware policy that uses grounding masks to guide object manipulation.
 
 </div>
-</div> -->
+</div>
 
 
 
