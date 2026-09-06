@@ -34,11 +34,8 @@
 
 <section id="service" aria-labelledby="service-heading">
   <h2 id="service-heading">Academic service</h2>
-  <p>Conference reviewer:
-    <span class="reviewer-venue">ICML (2025–2026)</span>;
-    <span class="reviewer-venue">ICLR (2025–2026)</span>;
-    <span class="reviewer-venue">NeurIPS (2024–2026)</span>;
-    <span class="reviewer-venue">CVPR (2024–2026)</span>;
-    <span class="reviewer-venue">ECCV (2026)</span>.
+  <p>Reviewer:<br>
+    Conference: ICML, ICLR, NeurIPS, CVPR, ECCV, AAAI<br>
+    Journal: TMLR, TIP, RA-L
   </p>
 </section>

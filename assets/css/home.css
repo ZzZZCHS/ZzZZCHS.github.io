@@ -87,7 +87,6 @@ main > section { margin-bottom: 44px; scroll-margin-top: 12px; }
 .experience-entry .entry-mentors { font-size: 12px; }
 .education-entry { margin-bottom: 19px; }
 #service p, #honors li { font-size: 14px; }
-.reviewer-venue { white-space: nowrap; }
 #honors ul { margin: 0; padding-left: 19px; }
 #honors li { margin: 6px 0; }
 .site-footer { margin-top: 45px; border-top: 1px solid var(--line); padding-top: 20px; font-size: 12px; color: var(--muted); }
