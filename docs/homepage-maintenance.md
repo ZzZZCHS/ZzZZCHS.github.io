@@ -62,11 +62,20 @@ public. The workflow uses its repository token with `contents: write` to publish
 only the minimal JSON snapshot to the statistics branch, preserving its history.
 It does not publish the source checkout or any local reference documents.
 
-Scholar may block automated requests or return a CAPTCHA. A failed or incomplete
-fetch fails the workflow and leaves the last successful snapshot intact. The page
-keeps the last available numbers and their original update date, never replacing
-unavailable data with zeros. Until the first successful run, it uses the checked-in
-fallback. If a paper is merged or removed on Scholar, deliberately reconcile its
+Scholar may block automated requests or return a CAPTCHA. The collector returns
+exit code 75 for `MaxTriesExceededException`. The workflow also limits each fetch
+to 90 seconds because the library's retries can outlast its per-request timeout.
+Either source unavailability or that deadline produces a warning and an explicit
+"refresh skipped" summary. The publish step is skipped, so neither counts nor
+timestamps change. A green workflow can therefore mean the run completed without
+a refresh; consult its summary. Invalid data, incomplete responses, code errors,
+and publishing failures still fail the workflow.
+
+Direct scraping remains best-effort and may continue to be blocked on GitHub-hosted
+runners. This failure handling does not guarantee that automatic refreshes succeed.
+The page keeps the last available numbers and their original tooltip dates, never
+replacing unavailable data with zeros. Until the first successful run, it uses the
+checked-in fallback. If a paper is merged or removed on Scholar, deliberately reconcile its
 ID in the publication list and snapshots; missing IDs are otherwise treated as
 an incomplete response. Refresh the fallback file from a validated successful
 snapshot when updating homepage content.

@@ -48,11 +48,30 @@ jobs:
             if [ "$status" -ne 2 ]; then exit "$status"; fi
           fi
       - name: Fetch Google Scholar citations
-        run: >-
-          python google_scholar_crawler/main.py
-          --previous "$RUNNER_TEMP/scholar-previous.json"
-          --output "$RUNNER_TEMP/scholar-results/gs_data.json"
+        id: citations
+        shell: bash
+        run: |
+          set -euo pipefail
+          # scholarly's internal retries can outlast its per-request timeout.
+          # Exit 75 means the source was unavailable; 124 is this explicit deadline.
+          status=0
+          timeout 90s python google_scholar_crawler/main.py \
+            --previous "$RUNNER_TEMP/scholar-previous.json" \
+            --output "$RUNNER_TEMP/scholar-results/gs_data.json" || status=$?
+          case "$status" in
+            0)
+              echo "refreshed=true" >> "$GITHUB_OUTPUT"
+              echo "Citation refresh succeeded. A validated snapshot is ready for publication." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            75|124)
+              echo "refreshed=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::Google Scholar was unavailable or timed out. Citations were not refreshed; existing counts and timestamp are retained."
+              echo "Citation refresh skipped: Google Scholar was unavailable or exceeded the 90-second deadline. Existing counts and timestamp are retained. The next scheduled run will try again." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *) exit "$status" ;;
+          esac
       - name: Publish only the citation snapshot
+        if: steps.citations.outputs.refreshed == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -70,3 +89,4 @@ jobs:
           if git -C "$stats_dir" diff --cached --quiet; then exit 0; fi
           git -C "$stats_dir" commit -m "Update Google Scholar citations"
           git -C "$stats_dir" push origin HEAD:refs/heads/google-scholar-stats
+          echo "Published the refreshed citation snapshot to google-scholar-stats." >> "$GITHUB_STEP_SUMMARY"

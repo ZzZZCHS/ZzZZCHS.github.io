@@ -2,11 +2,33 @@
 import argparse
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_PROFILE = "oUm2gZUAAAAJ"
 ROOT = Path(__file__).resolve().parents[1]
+FETCH_UNAVAILABLE = 75
+
+
+class ScholarUnavailable(RuntimeError):
+    """The source could not be reached; this does not mean its citation counts changed."""
+
+
+def fetch_author(profile_id):
+    from scholarly import scholarly
+    from scholarly._proxy_generator import MaxTriesExceededException
+
+    scholarly.set_timeout(15)
+    scholarly.set_retries(1)
+    try:
+        author = scholarly.search_author_id(profile_id)
+        scholarly.fill(author, sections=["publications"])
+    except MaxTriesExceededException as error:
+        raise ScholarUnavailable(
+            "Google Scholar could not be fetched. Automated access may be blocked or unavailable."
+        ) from error
+    return author
 
 
 def build_snapshot(author, profile_id, previous):
@@ -48,23 +70,25 @@ def save_snapshot(snapshot, destination):
     temporary.replace(destination)
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--previous", type=Path, default=ROOT / "_data/scholar_stats.json")
     parser.add_argument("--output", type=Path, default=Path(__file__).parent / "results/gs_data.json")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     previous = json.loads(args.previous.read_text(encoding="utf-8"))
     profile_id = os.environ.get("GOOGLE_SCHOLAR_ID") or DEFAULT_PROFILE
 
-    from scholarly import scholarly
-    scholarly.set_timeout(15)
-    scholarly.set_retries(1)
-    author = scholarly.search_author_id(profile_id)
-    scholarly.fill(author, sections=["publications"])
+    try:
+        author = fetch_author(profile_id)
+    except ScholarUnavailable as error:
+        print(f"Citation refresh skipped: {error} Existing counts and timestamp are unchanged.", file=sys.stderr)
+        return FETCH_UNAVAILABLE
+
     snapshot = build_snapshot(author, profile_id, previous)
     save_snapshot(snapshot, args.output)
     print(f"Saved citation counts for {len(snapshot['publications'])} papers at {snapshot['updated']}.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
