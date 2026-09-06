@@ -6,7 +6,7 @@ I am a Ph.D. student in Computer Science at **Iowa State University**, advised b
 
 My current research focuses on **efficient multimodal models**, with an emphasis on **video large language models (Video LLMs)**. My work aims to improve computational efficiency while maintaining strong video understanding performance.
 
-My broader research interests include **3D vision and embodied AI**. My earlier work in these areas focused on 3D scene understanding and robotic manipulation.
+My broader research interests include **3D vision and embodied AI**, particularly 3D scene understanding and robotic manipulation.
 
 My long-term goal is to build AI systems that perceive and understand the physical world reliably and efficiently.
 
