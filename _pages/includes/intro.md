@@ -8,4 +8,6 @@ My current research focuses on **efficient multimodal models**, with an emphasis
 
 My broader research interests include **3D vision and embodied AI**, building on my prior work in 3D scene understanding and robotic manipulation.
 
+My long-term goal is to build AI systems that perceive and understand the physical world reliably and efficiently.
+
 </section>

@@ -95,10 +95,11 @@ python -m unittest discover -s google_scholar_crawler/tests -p 'test_*.py'
 node --test google_scholar_crawler/tests/scholar-citations.test.js
 ```
 
-## Private CV
+## Private reference documents
 
-`Haifeng_Huang_CV.pdf` is a local reference only. It is excluded in both `.gitignore`
-and `_config.yml`; do not add a download link or force-add the file to Git.
+`Haifeng_Huang_CV.pdf` and `NIW_Petition_Letter.pdf` are local references only.
+Both are excluded in `.gitignore` and `_config.yml`; do not add download links
+or force-add either file to Git.
 Apply both exclusions when adding or renaming any private reference document.
 Serve the generated `_site` directory, not the repository root.
 

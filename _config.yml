@@ -70,6 +70,7 @@ include:
   - files
 exclude:
   - Haifeng_Huang_CV.pdf
+  - NIW_Petition_Letter.pdf
   - docs
   - google_scholar_crawler
   - "*.sublime-project"
