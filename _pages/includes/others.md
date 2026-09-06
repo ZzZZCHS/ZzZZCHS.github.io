@@ -1,5 +1,5 @@
 <section id="experience" aria-labelledby="experience-heading">
-  <h2 id="experience-heading">Research &amp; industry experience</h2>
+  <h2 id="experience-heading">Work Experience</h2>
   <div class="experience-entry">
     <div class="entry-heading"><h3>ByteDance</h3><span class="entry-date">May – Aug 2025</span></div>
     <p class="entry-role">Research Engineer <span>· Shanghai, China</span></p>
@@ -33,9 +33,9 @@
 </section>
 
 <section id="service" aria-labelledby="service-heading">
-  <h2 id="service-heading">Academic service</h2>
-  <p>Reviewer:<br>
-    Conference: ICML, ICLR, NeurIPS, CVPR, ECCV, AAAI<br>
-    Journal: TMLR, TIP, RA-L
+  <h2 id="service-heading">Academic Service</h2>
+  <p>
+    Conference Reviewer: ICML, ICLR, NeurIPS, CVPR, ECCV, AAAI<br>
+    Journal Reviewer: TMLR, TIP, RA-L
   </p>
 </section>
