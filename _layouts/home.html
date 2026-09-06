@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include seo.html %}
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/images/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/images/favicon-16x16.png' | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ '/images/apple-touch-icon.png' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/home.css' | relative_url }}">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="site-name" href="{{ '/' | relative_url }}">Haifeng Huang</a>
+        <ul>
+          {% for link in site.data.navigation.main %}<li><a href="{{ link.url | relative_url }}">{{ link.title }}</a></li>{% endfor %}
+        </ul>
+      </nav>
+    </header>
+    <div class="home-layout">
+      <aside class="profile" aria-label="Profile">
+        <img class="profile-photo" src="{{ site.author.avatar | relative_url }}" width="176" height="176" alt="Haifeng Huang" fetchpriority="high">
+        <div class="profile-identity">
+          <h1>{{ site.author.name }}</h1>
+          <p class="profile-chinese" lang="zh">{{ site.author.chinese_name }}</p>
+          <p class="profile-role">{{ site.author.role }}</p>
+          <p class="profile-affiliation">{{ site.author.bio }}</p>
+          <p class="profile-location">{{ site.author.location }}</p>
+        </div>
+        <ul class="profile-links" aria-label="Contact and profiles">
+          <li><a href="mailto:{{ site.author.email }}">{% include icon.html name="email" %} Email</a></li>
+          <li><a href="{{ site.author.googlescholar }}">{% include icon.html name="scholar" %} Google Scholar</a></li>
+          <li><a href="https://github.com/{{ site.author.github }}">{% include icon.html name="github" %} GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}">{% include icon.html name="linkedin" %} LinkedIn</a></li>
+        </ul>
+      </aside>
+      <main id="main" tabindex="-1">
+        {{ content }}
+        <footer class="site-footer">
+          <p>© {{ site.time | date: '%Y' }} {{ site.author.name }} <a href="#about-me">Back to top ↑</a></p>
+          <div class="visitor-map">
+            <script defer id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?cl=080808&amp;w=300&amp;t=tt&amp;d=fYCrZNCvpFifgkfasztQwZDOR21NJab0PJ5_nGtQ1XA&amp;co=ffffff&amp;cmo=3acc3a&amp;cmn=ff5353&amp;ct=808080"></script>
+          </div>
+        </footer>
+      </main>
+    </div>
+    {% include analytics.html %}
+    {% include fetch_google_scholar_stats.html %}
+  </body>
+</html>

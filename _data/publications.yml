@@ -1,0 +1,201 @@
+# Publication metadata, checked against Google Scholar and publisher records in September 2026.
+# Use the published title, author order, venue, and year; keep preprints explicitly labeled.
+# selected: true displays a thumbnail and contribution summary; other papers use a compact list.
+# Bold Haifeng Huang and escape contribution markers as \\* for Markdown rendering.
+# Omit contribution markers for the whole author list when Haifeng Huang is listed first.
+- id: "kitoke"
+  scholar_id: "oUm2gZUAAAAJ:e5wmG9Sq2KIC"
+  selected: true
+  title: "KiToke: Kernel-based Interval-aware Token Compression for Video Large Language Models"
+  authors: "**Haifeng Huang**, Yang Li"
+  venue: "arXiv · 2026"
+  year: 2026
+  preprint: true
+  image: "images/thumbnails/kitoke.webp"
+  paper: "https://arxiv.org/abs/2604.03414"
+  summary: "Training-free video token compression that removes global redundancy while preserving temporal coherence, including at token retention ratios as low as 1%."
+
+- id: "chat-scene-plus-plus"
+  scholar_id: "oUm2gZUAAAAJ:bEWYMUwI8FkC"
+  selected: true
+  title: "Chat-Scene++: Exploiting Context-Rich Object Identification for 3D LLM"
+  authors: "**Haifeng Huang**, Yilun Chen, Zehan Wang, Jiangmiao Pang, Zhou Zhao"
+  venue: "IEEE TPAMI · 2026"
+  year: 2026
+  image: "images/thumbnails/chat-scene-plus-plus.webp"
+  paper: "https://arxiv.org/abs/2603.27507"
+  code: "https://github.com/ZzZZCHS/Chat-Scene"
+  data: "https://huggingface.co/datasets/ZzZZCHS/Chat-Scene_plusplus"
+  summary: "Context-rich object representations and explicit identifiers unify 3D grounding, captioning, and spatial reasoning without task-specific fine-tuning."
+
+- id: "roboground"
+  scholar_id: "oUm2gZUAAAAJ:TFP_iSt0sucC"
+  selected: true
+  title: "RoboGround: Robotic Manipulation with Grounded Vision-Language Priors"
+  authors: "**Haifeng Huang**, Xinyi Chen, Yilun Chen, Hao Li, Xiaoshen Han, Zehan Wang, Tai Wang, Jiangmiao Pang, Zhou Zhao"
+  venue: "CVPR · 2025"
+  year: 2025
+  image: "images/thumbnails/roboground.webp"
+  paper: "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_RoboGround_Robotic_Manipulation_with_Grounded_Vision-Language_Priors_CVPR_2025_paper.html"
+  code: "https://github.com/ZzZZCHS/RoboGround"
+  project: "https://robo-ground.github.io/"
+  data: "https://huggingface.co/datasets/ZzZZCHS/RoboGround_Data"
+  summary: "A large-scale simulated manipulation dataset and a grounding-aware robot policy that uses object masks to turn vision-language priors into actions."
+
+- id: "chat-scene"
+  scholar_id: "oUm2gZUAAAAJ:WF5omc3nYNoC"
+  selected: true
+  title: "Chat-Scene: Bridging 3D Scene and Large Language Models with Object Identifiers"
+  authors: "**Haifeng Huang**, Yilun Chen, Zehan Wang, Rongjie Huang, Runsen Xu, Tai Wang, Luping Liu, Xize Cheng, Yang Zhao, Jiangmiao Pang, Zhou Zhao"
+  venue: "NeurIPS · 2024"
+  year: 2024
+  image: "images/thumbnails/chat-scene.webp"
+  paper: "https://arxiv.org/abs/2312.08168"
+  code: "https://github.com/ZzZZCHS/Chat-Scene"
+  data: "https://huggingface.co/datasets/ZzZZCHS/Chat-Scene"
+  summary: "Object identifiers connect point clouds and multi-view images to language for 3D grounding, captioning, and question answering. Ranked first on ScanRefer and Scan2Cap in September 2024."
+
+- id: "robin3d"
+  scholar_id: "oUm2gZUAAAAJ:4DMP91E08xMC"
+  selected: false
+  title: "Robin3D: Improving 3D Large Language Model via Robust Instruction Tuning"
+  authors: "Weitai Kang, **Haifeng Huang**, Yuzhang Shang, Mubarak Shah, Yan Yan"
+  venue: "ICCV · 2025"
+  year: 2025
+  paper: "https://arxiv.org/abs/2410.00255"
+  code: "https://github.com/WeitaiKang/Robin3D"
+
+- id: "chat-3d"
+  scholar_id: "oUm2gZUAAAAJ:qjMakFHDy7sC"
+  selected: false
+  title: "Data-Efficiently Learn Large Language Model for Universal 3D Scene Perception"
+  alias: "Chat-3D · published version"
+  authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Ziang Zhang, Tao Jin, Zhou Zhao"
+  venue: "Findings of NAACL · 2025"
+  year: 2025
+  paper: "https://aclanthology.org/2025.findings-naacl.18/"
+  project: "https://chat-3d.github.io/"
+  code: "https://github.com/Chat-3D/Chat-3D"
+
+- id: "spatialclip"
+  scholar_id: "oUm2gZUAAAAJ:mVmsd5A6BfQC"
+  selected: false
+  title: "SpatialCLIP: Learning 3D-aware Image Representations from Spatially Discriminative Language"
+  authors: "Zehan Wang\\*, Sashuai Zhou\\*, Shaoxuan He, **Haifeng Huang**, Lihe Yang, Ziang Zhang, Xize Cheng, Shengpeng Ji, Tao Jin, Hengshuang Zhao, Zhou Zhao"
+  venue: "CVPR · 2025"
+  year: 2025
+  paper: "https://openaccess.thecvf.com/content/CVPR2025/html/Wang_SpatialCLIP_Learning_3D-aware_Image_Representations_from_Spatially_Discriminative_Language_CVPR_2025_paper.html"
+  code: "https://github.com/SpatialVision/Spatial-CLIP"
+
+- id: "genmanip"
+  scholar_id: "oUm2gZUAAAAJ:isC4tDSrTZIC"
+  selected: false
+  title: "GENMANIP: LLM-driven Simulation for Generalizable Instruction-Following Manipulation"
+  authors: "Ning Gao\\*, Yilun Chen\\*, Shuai Yang\\*, Xinyi Chen\\*, Yang Tian, Hao Li, **Haifeng Huang**, Hanqing Wang, Tai Wang, Jiangmiao Pang"
+  venue: "CVPR · 2025"
+  year: 2025
+  paper: "https://openaccess.thecvf.com/content/CVPR2025/html/Gao_GENMANIP_LLM-driven_Simulation_for_Generalizable_Instruction-Following_Manipulation_CVPR_2025_paper.html"
+  code: "https://github.com/InternRobotics/GenManip"
+  project: "https://genmanip.com/"
+
+- id: "grounded-3d-llm"
+  scholar_id: "oUm2gZUAAAAJ:kNdYIx-mwKoC"
+  selected: false
+  title: "Grounded 3D-LLM with Referent Tokens"
+  authors: "Yilun Chen\\*, Shuai Yang\\*, **Haifeng Huang**\\*, Tai Wang, Ruiyuan Lyu, Runsen Xu, Dahua Lin, Jiangmiao Pang"
+  venue: "arXiv · 2024"
+  year: 2024
+  preprint: true
+  paper: "https://arxiv.org/abs/2405.10370"
+  project: "https://groundedscenellm.github.io/grounded_3d-llm.github.io/"
+  code: "https://github.com/OpenRobotLab/Grounded_3D-LLM"
+
+- id: "mmscan"
+  scholar_id: "oUm2gZUAAAAJ:KlAtU1dfN6UC"
+  selected: false
+  title: "MMScan: A Multi-Modal 3D Scene Dataset with Hierarchical Grounded Language Annotations"
+  authors: "Ruiyuan Lyu, Jingli Lin, Tai Wang, Shuai Yang, Xiaohan Mao, Yilun Chen, Runsen Xu, **Haifeng Huang**, Chenming Zhu, Dahua Lin, Jiangmiao Pang"
+  venue: "NeurIPS Datasets and Benchmarks · 2024"
+  year: 2024
+  paper: "https://arxiv.org/abs/2406.09401"
+  code: "https://github.com/rbler1234/MMScan"
+  project: "https://taiwang.me/mmscan/"
+
+- id: "freebind"
+  scholar_id: "oUm2gZUAAAAJ:MXK_kJrjxJIC"
+  selected: false
+  title: "FreeBind: Free Lunch in Unified Multimodal Space via Knowledge Fusion"
+  authors: "Zehan Wang, Ziang Zhang, Xize Cheng, Rongjie Huang, Luping Liu, Zhenhui Ye, **Haifeng Huang**, Yang Zhao, Tao Jin, Peng Gao, Zhou Zhao"
+  venue: "ICML · 2024"
+  year: 2024
+  paper: "https://proceedings.mlr.press/v235/wang24co.html"
+  code: "https://github.com/zehanwang01/FreeBind"
+
+- id: "ex-mcr"
+  scholar_id: "oUm2gZUAAAAJ:UeHWp8X0CEIC"
+  selected: false
+  title: "Extending Multi-modal Contrastive Representations"
+  authors: "Ziang Zhang\\*, Zehan Wang\\*, Luping Liu, Rongjie Huang, Xize Cheng, Zhenhui Ye, Wang Lin, Huadai Liu, **Haifeng Huang**, Yang Zhao, Tao Jin, Siqi Zheng, Zhou Zhao"
+  venue: "NeurIPS · 2024"
+  year: 2024
+  paper: "https://papers.neurips.cc/paper_files/paper/2024/file/a71df365f872a39e58475f1fa7950879-Paper-Conference.pdf"
+  code: "https://github.com/MCR-PEFT/Ex-MCR"
+
+- id: "c-mcr"
+  scholar_id: "oUm2gZUAAAAJ:Wp0gIr-vW9MC"
+  selected: false
+  title: "Connecting Multi-modal Contrastive Representations"
+  authors: "Zehan Wang, Yang Zhao, Xize Cheng, **Haifeng Huang**, Jiageng Liu, Aoxiong Yin, Li Tang, Linjun Li, Yongqi Wang, Ziang Zhang, Zhou Zhao"
+  venue: "NeurIPS · 2023"
+  year: 2023
+  paper: "https://papers.neurips.cc/paper_files/paper/2023/hash/46362971bfc3a97e6a271f2eb90fba17-Abstract-Conference.html"
+  project: "https://c-mcr.github.io/C-MCR/"
+  code: "https://github.com/MCR-PEFT/C-MCR"
+
+- id: "ws-3dvg"
+  scholar_id: "oUm2gZUAAAAJ:9yKSN-GCB0IC"
+  selected: false
+  title: "Distilling Coarse-to-Fine Semantic Matching Knowledge for Weakly Supervised 3D Visual Grounding"
+  authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Linjun Li, Xize Cheng, Yichen Zhu, Aoxiong Yin, Zhou Zhao"
+  venue: "ICCV · 2023"
+  year: 2023
+  paper: "https://openaccess.thecvf.com/content/ICCV2023/html/Wang_Distilling_Coarse-to-Fine_Semantic_Matching_Knowledge_for_Weakly_Supervised_3D_Visual_ICCV_2023_paper.html"
+  code: "https://github.com/ZzZZCHS/WS-3DVG"
+
+- id: "3drp-net"
+  scholar_id: "oUm2gZUAAAAJ:2osOgNQ5qMEC"
+  selected: false
+  title: "3DRP-Net: 3D Relative Position-aware Network for 3D Visual Grounding"
+  authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Linjun Li, Xize Cheng, Yichen Zhu, Aoxiong Yin, Zhou Zhao"
+  venue: "EMNLP · 2023"
+  year: 2023
+  paper: "https://aclanthology.org/2023.emnlp-main.656/"
+
+- id: "scene-robust"
+  scholar_id: "oUm2gZUAAAAJ:d1gkVwhDpl0C"
+  selected: false
+  title: "Scene-robust Natural Language Video Localization via Learning Domain-invariant Representations"
+  authors: "Zehan Wang, Yang Zhao, **Haifeng Huang**, Yan Xia, Zhou Zhao"
+  venue: "Findings of ACL · 2023"
+  year: 2023
+  paper: "https://aclanthology.org/2023.findings-acl.11/"
+
+- id: "amda"
+  scholar_id: "oUm2gZUAAAAJ:5nxA0vEk-isC"
+  selected: false
+  title: "Multi-Modal Domain Adaptation Across Video Scenes for Temporal Video Grounding"
+  authors: "**Haifeng Huang**, Yang Zhao, Zehan Wang, Yan Xia, Zhou Zhao"
+  venue: "arXiv · 2023"
+  year: 2023
+  preprint: true
+  paper: "https://arxiv.org/abs/2312.13633"
+
+- id: "turn"
+  scholar_id: "oUm2gZUAAAAJ:u5HHmVD_uO8C"
+  selected: false
+  title: "Towards Effective Multi-modal Interchanges in Zero-resource Sounding Object Localization"
+  authors: "Yang Zhao\\*, Chen Zhang\\*, **Haifeng Huang**\\*, Haoyuan Li, Zhou Zhao"
+  venue: "NeurIPS · 2022"
+  year: 2022
+  paper: "https://proceedings.neurips.cc/paper_files/paper/2022/hash/f8de10c9ff056ae3d1eef43ad1762351-Abstract-Conference.html"
+  code: "https://github.com/AwalkZY/TURN"

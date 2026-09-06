@@ -1,0 +1,67 @@
+import importlib.util
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+spec = importlib.util.spec_from_file_location("collector", Path(__file__).parents[1] / "main.py")
+collector = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(collector)
+
+
+class SnapshotTests(unittest.TestCase):
+    profile = "testProfile"
+    previous = {"profile_id": profile, "publications": {"testProfile:paper": {"num_citations": 9}}}
+
+    def author(self, count=0):
+        return {"scholar_id": self.profile, "publications": [
+            {"author_pub_id": "testProfile:paper", "num_citations": count}
+        ]}
+
+    def test_zero_is_valid_and_snapshot_is_minimal(self):
+        result = collector.build_snapshot(self.author(), self.profile, self.previous)
+        self.assertEqual(result["publications"]["testProfile:paper"]["num_citations"], 0)
+        self.assertEqual(set(result), {"profile_id", "updated", "publications"})
+        self.assertTrue(result["updated"].endswith("+00:00"))
+
+    def test_rejects_missing_or_invalid_counts(self):
+        for count in [None, -1, True, "5"]:
+            with self.subTest(count=count), self.assertRaises(ValueError):
+                collector.build_snapshot(self.author(count), self.profile, self.previous)
+
+    def test_rejects_wrong_profile_empty_and_truncated_responses(self):
+        for author in [
+            {"scholar_id": "other", "publications": []},
+            {"scholar_id": self.profile, "publications": []},
+            {"scholar_id": self.profile, "publications": [
+                {"author_pub_id": "testProfile:new", "num_citations": 3}
+            ]},
+        ]:
+            with self.subTest(author=author), self.assertRaises(ValueError):
+                collector.build_snapshot(author, self.profile, self.previous)
+
+    def test_rejects_duplicate_publication_ids(self):
+        author = self.author()
+        author["publications"] *= 2
+        with self.assertRaises(ValueError):
+            collector.build_snapshot(author, self.profile, self.previous)
+
+    def test_new_papers_are_included(self):
+        author = self.author(10)
+        author["publications"].append({"author_pub_id": "testProfile:new", "num_citations": 1})
+        result = collector.build_snapshot(author, self.profile, self.previous)
+        self.assertEqual(len(result["publications"]), 2)
+
+    def test_failed_validation_does_not_overwrite_existing_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "gs_data.json"
+            collector.save_snapshot(self.previous, target)
+            with self.assertRaises(ValueError):
+                collector.save_snapshot(
+                    collector.build_snapshot(self.author(None), self.profile, self.previous), target
+                )
+            self.assertEqual(json.loads(target.read_text()), self.previous)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,35 @@
+{% assign paper = include.paper %}
+<article class="publication{% if include.featured %} publication--featured{% endif %}" id="{{ paper.id }}" aria-labelledby="{{ paper.id }}-title">
+  {% if include.featured and paper.image %}
+  <a class="publication-image" href="{{ paper.paper }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ paper.image | relative_url }}" alt="" width="560" height="360" loading="lazy" decoding="async">
+  </a>
+  {% endif %}
+  <div class="publication-body">
+    <p class="publication-venue{% if paper.preprint %} publication-venue--preprint{% endif %}">{{ paper.venue }}</p>
+    <h3 id="{{ paper.id }}-title"><a href="{{ paper.paper }}">{{ paper.title }}</a></h3>
+    {% if paper.alias %}<p class="publication-alias">{{ paper.alias }}</p>{% endif %}
+    <div class="publication-authors">{{ paper.authors | markdownify }}</div>
+    {% if include.featured %}<p class="publication-summary">{{ paper.summary }}</p>{% endif %}
+    <ul class="publication-links" aria-label="Resources for {{ paper.id }}">
+      <li><a href="{{ paper.paper }}">{% include icon.html name="paper" %} Paper</a></li>
+      {% if paper.code %}<li><a href="{{ paper.code }}">{% include icon.html name="github" %} Code</a></li>{% endif %}
+      {% if paper.project %}<li><a href="{{ paper.project }}">{% include icon.html name="project" %} Project</a></li>{% endif %}
+      {% if paper.data %}<li><a href="{{ paper.data }}">{% include icon.html name="data" %} Data</a></li>{% endif %}
+    </ul>
+    {% assign scholar_entry = site.data.scholar_stats.publications[paper.scholar_id] %}
+    {% assign show_citations = false %}
+    {% if scholar_entry and scholar_entry.num_citations >= 10 %}{% assign show_citations = true %}{% endif %}
+    <div class="publication-metrics" aria-label="Publication metrics"{% unless show_citations or paper.code %} hidden{% endunless %}>
+      <a class="scholar-citations" data-scholar-id="{{ paper.scholar_id }}" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user={{ site.data.scholar_stats.profile_id }}&amp;citation_for_view={{ paper.scholar_id | url_encode }}" title="Google Scholar citations · updated {{ site.data.scholar_stats.updated | date: '%b %d, %Y' }}"{% unless show_citations %} hidden{% endunless %}>
+        <span>Citations</span><span class="citation-count">{% if scholar_entry %}{{ scholar_entry.num_citations }}{% else %}—{% endif %}</span>
+      </a>
+      {% if paper.code %}
+      {% assign github_repo = paper.code | remove: 'https://github.com/' %}
+      <a class="github-stars" href="{{ paper.code }}" title="GitHub stars for {{ github_repo }} · automatically updated by Shields.io">
+        <img src="https://img.shields.io/github/stars/{{ github_repo }}?style=social&amp;label=Stars&amp;cacheSeconds=300" alt="GitHub stars for {{ github_repo }}" height="20" loading="lazy" decoding="async">
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</article>

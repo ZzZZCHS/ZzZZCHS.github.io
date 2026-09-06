@@ -7,9 +7,11 @@
 
 # Site Settings
 title                    : "Haifeng Huang"
-description              : "Ph.D. Student"
+description              : "Haifeng Huang is a Computer Science Ph.D. student at Iowa State University researching efficient multimodal models, particularly Video LLMs, with prior work in 3D vision and embodied AI."
+url                      : "https://zzzzchs.github.io"
+baseurl                  : ""
 repository               : "ZzZZCHS/ZzZZCHS.github.io"
-google_scholar_stats_use_cdn : true
+google_scholar_stats_use_cdn : false
 
 # google analytics
 google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/
@@ -22,10 +24,11 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Haifeng Huang"
-  chinesename      : "黄海烽"
+  chinese_name     : "黄海烽"
   avatar           : "images/profile.jpg"
   bio              : "Iowa State University"
-  location         : "Iowa, United States"
+  role             : "Ph.D. Student · Computer Science"
+  location         : "Ames, Iowa, United States"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=oUm2gZUAAAAJ"
@@ -66,6 +69,7 @@ include:
   - _pages
   - files
 exclude:
+  - Haifeng_Huang_CV.pdf
   - docs
   - google_scholar_crawler
   - "*.sublime-project"

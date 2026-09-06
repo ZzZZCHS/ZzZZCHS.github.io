@@ -1,29 +1,72 @@
-name: Get Citation Data
+name: Update publication citations
 
-on: 
- page_build: 
- schedule:
-  - cron:  '0 8 * * *'
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/google_scholar_crawler.yaml"
+      - "google_scholar_crawler/**"
+      - "_data/publications.yml"
+      - "_data/scholar_stats.json"
+  schedule:
+    - cron: "17 */6 * * *"
+
+concurrency:
+  group: google-scholar-stats
+  cancel-in-progress: false
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      GOOGLE_SCHOLAR_ID: oUm2gZUAAAAJ
     steps:
-    - uses: actions/checkout@v2
-    - name: Install Reqs
-      run: |
-        sudo apt-get install python3-setuptools
-    - name: Run
-      run: |
-        cd ./google_scholar_crawler
-        pip3 install -r requirements.txt
-        python3 main.py
-        cd ./results
-        git init
-        git config --local user.name "${GITHUB_ACTOR}"
-        export remote_repo="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-        git add *.json
-        git commit -m "Updated Citation Data"
-        git push "${remote_repo}" HEAD:google-scholar-stats --force
-      env: 
-        GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: google_scholar_crawler/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r google_scholar_crawler/requirements.txt
+      - name: Test snapshot validation
+        run: python -m unittest discover -s google_scholar_crawler/tests -p 'test_*.py'
+      - name: Load the last successful snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp _data/scholar_stats.json "$RUNNER_TEMP/scholar-previous.json"
+          if git ls-remote --exit-code --heads origin refs/heads/google-scholar-stats > /dev/null; then
+            git fetch --depth=1 origin google-scholar-stats:refs/remotes/origin/google-scholar-stats
+            git show refs/remotes/origin/google-scholar-stats:gs_data.json > "$RUNNER_TEMP/scholar-previous.json"
+          else
+            status=$?
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+          fi
+      - name: Fetch Google Scholar citations
+        run: >-
+          python google_scholar_crawler/main.py
+          --previous "$RUNNER_TEMP/scholar-previous.json"
+          --output "$RUNNER_TEMP/scholar-results/gs_data.json"
+      - name: Publish only the citation snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          stats_dir="$RUNNER_TEMP/scholar-publish"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git show-ref --verify --quiet refs/remotes/origin/google-scholar-stats; then
+            git worktree add --detach "$stats_dir" refs/remotes/origin/google-scholar-stats
+          else
+            git worktree add --detach "$stats_dir" HEAD
+            git -C "$stats_dir" switch --orphan google-scholar-stats
+          fi
+          cp "$RUNNER_TEMP/scholar-results/gs_data.json" "$stats_dir/gs_data.json"
+          git -C "$stats_dir" add -- gs_data.json
+          if git -C "$stats_dir" diff --cached --quiet; then exit 0; fi
+          git -C "$stats_dir" commit -m "Update Google Scholar citations"
+          git -C "$stats_dir" push origin HEAD:refs/heads/google-scholar-stats

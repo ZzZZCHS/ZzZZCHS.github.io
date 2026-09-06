@@ -1,23 +1,70 @@
-from scholarly import scholarly
-import jsonpickle
+"""Fetch a complete Scholar snapshot; never replace good data with a partial response."""
+import argparse
 import json
-from datetime import datetime
 import os
+from datetime import datetime, timezone
+from pathlib import Path
 
-author: dict = scholarly.search_author_id(os.environ['GOOGLE_SCHOLAR_ID'])
-scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
-name = author['name']
-author['updated'] = str(datetime.now())
-author['publications'] = {v['author_pub_id']:v for v in author['publications']}
-print(json.dumps(author, indent=2))
-os.makedirs('results', exist_ok=True)
-with open(f'results/gs_data.json', 'w') as outfile:
-    json.dump(author, outfile, ensure_ascii=False)
+DEFAULT_PROFILE = "oUm2gZUAAAAJ"
+ROOT = Path(__file__).resolve().parents[1]
 
-shieldio_data = {
-  "schemaVersion": 1,
-  "label": "citations",
-  "message": f"{author['citedby']}",
-}
-with open(f'results/gs_data_shieldsio.json', 'w') as outfile:
-    json.dump(shieldio_data, outfile, ensure_ascii=False)
+
+def build_snapshot(author, profile_id, previous):
+    if author.get("scholar_id") != profile_id:
+        raise ValueError("Scholar returned a different profile.")
+    if previous and previous.get("profile_id") != profile_id:
+        raise ValueError("The previous snapshot belongs to another profile.")
+
+    publications = {}
+    for paper in author.get("publications", []):
+        paper_id = paper.get("author_pub_id")
+        citations = paper.get("num_citations")
+        if not isinstance(paper_id, str) or not paper_id.startswith(profile_id + ":"):
+            raise ValueError("Missing or invalid Scholar publication ID.")
+        if type(citations) is not int or citations < 0:
+            raise ValueError(f"Invalid citation count for {paper_id}.")
+        if paper_id in publications:
+            raise ValueError(f"Duplicate Scholar publication ID: {paper_id}.")
+        publications[paper_id] = {"num_citations": citations}
+
+    if not publications:
+        raise ValueError("Scholar returned no publications; the previous snapshot is retained.")
+    missing = set(previous.get("publications", {})) - set(publications)
+    if missing:
+        raise ValueError(f"Incomplete Scholar response; missing {len(missing)} previous publications.")
+
+    return {
+        "profile_id": profile_id,
+        "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "publications": publications,
+    }
+
+
+def save_snapshot(snapshot, destination):
+    destination = Path(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = destination.with_suffix(".tmp")
+    temporary.write_text(json.dumps(snapshot, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(destination)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--previous", type=Path, default=ROOT / "_data/scholar_stats.json")
+    parser.add_argument("--output", type=Path, default=Path(__file__).parent / "results/gs_data.json")
+    args = parser.parse_args()
+    previous = json.loads(args.previous.read_text(encoding="utf-8"))
+    profile_id = os.environ.get("GOOGLE_SCHOLAR_ID") or DEFAULT_PROFILE
+
+    from scholarly import scholarly
+    scholarly.set_timeout(15)
+    scholarly.set_retries(1)
+    author = scholarly.search_author_id(profile_id)
+    scholarly.fill(author, sections=["publications"])
+    snapshot = build_snapshot(author, profile_id, previous)
+    save_snapshot(snapshot, args.output)
+    print(f"Saved citation counts for {len(snapshot['publications'])} papers at {snapshot['updated']}.")
+
+
+if __name__ == "__main__":
+    main()

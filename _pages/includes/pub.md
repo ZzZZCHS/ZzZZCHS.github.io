@@ -1,109 +1,19 @@
-
-# 📝 Publications 
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arXiv 2026</div><img src='images/kitoke.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[KiToke: Kernel-based Interval-aware Token Compression for Video Large Language Models.](https://arxiv.org/abs/2604.03414)
-
-**Haifeng Huang**, Yang Li
-
-- KiToke is a training-free method that compresses video tokens by removing global redundancy while preserving temporal coherence for efficient Video LLM inference.
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TPAMI 2026</div><img src='images/chat-scene++.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Chat-Scene++: Exploiting Context-Rich Object Identification for 3D LLM.](https://arxiv.org/abs/2603.27507) [![](https://img.shields.io/github/stars/ZzZZCHS/Chat-Scene?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/Chat-Scene)
-
-**Haifeng Huang**, Yilun Chen, Zehan Wang, Jiangmiao Pang, Zhou Zhao
-
-- Chat-Scene++ is a unified 3D LLM framework that models 3D scenes as sequences of context-rich objects with explicit identifiers, enabling accurate grounding, reasoning, and interaction across diverse 3D vision-language tasks without task-specific tuning.
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2025</div><img src='images/roboground.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[RoboGround: Robotic Manipulation with Grounded Vision-Language Priors.](https://openaccess.thecvf.com/content/CVPR2025/html/Huang_RoboGround_Robotic_Manipulation_with_Grounded_Vision-Language_Priors_CVPR_2025_paper.html) [![](https://img.shields.io/github/stars/ZzZZCHS/RoboGround?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/RoboGround)
-
-**Haifeng Huang**, Xinyi Chen, Yilun Chen, Hao Li, Xiaoshen Han, Zehan Wang, Tai Wang, Jiangmiao Pang, Zhou Zhao
-
-- Create a large-scale simulated robotic manipulation dataset and develop a grounding-aware policy that uses grounding masks to guide object manipulation.
-
-</div>
-</div>
-
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">NeurIPS 2024</div><img src='images/chat-scene.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Chat-Scene: Bridging 3D Scene and Large Language Models with Object Identifiers.](https://arxiv.org/abs/2312.08168) [![](https://img.shields.io/github/stars/ZzZZCHS/Chat-Scene?style=social&label=Code+Stars)](https://github.com/ZzZZCHS/Chat-Scene)
-
-**Haifeng Huang**, Yilun Chen, Zehan Wang, Rongjie Huang, Runsen Xu, Tai Wang, Luping Liu, Xize Cheng, Yang Zhao, Jiangmiao Pang, Zhou Zhao
-
-- Chat-Scene is a 3D LLM which processes both point clouds and multi-view images for 3D scene understanding, excelling in tasks such as 3D grounding, captioning, and question answering.
-- (Sep. 2024) Ranked 1st on the grounding benchmark [ScanRefer](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_localization) and the captioning benchmark [Scan2Cap](https://kaldir.vc.in.tum.de/scanrefer_benchmark/benchmark_captioning).
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arXiv 2024</div><img src='images/grounded-3dllm.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Grounded 3D-LLM with Referent Tokens.](https://groundedscenellm.github.io/grounded_3d-llm.github.io/) [![](https://img.shields.io/github/stars/OpenRobotLab/Grounded_3D-LLM?style=social&label=Code+Stars)](https://github.com/OpenRobotLab/Grounded_3D-LLM)
-
-Yilun Chen\*, Shuai Yang\*, **Haifeng Huang\***, Tai Wang, Ruiyuan Lyu, Runsen Xu, Dahua Lin, Jiangmiao Pang.
-
-- Grounded 3D-LLM establishes a correspondence between 3D scenes and language phrases through referent tokens.
-- Create a large-scale grounded scene caption dataset at phrase-level.
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">NAACL 2025</div><img src='images/chat-3d.png' alt="sym" width="50%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Chat-3D: Data-efficiently Tuning Large Language Model for Universal Dialogue of 3D Scenes.](https://chat-3d.github.io/) [![](https://img.shields.io/github/stars/Chat-3D/Chat-3D?style=social&label=Code+Stars)](https://github.com/Chat-3D/Chat-3D)
-
-Zehan Wang\*, **Haifeng Huang\***, Yang Zhao, Ziang Zhang, Zhou Zhao.
-
-- Chat-3D is one of the frist 3D LLMs.
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2023</div><img src='images/ws-3dvg.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Distilling Coarse-to-Fine Semantic Matching Knowledge for Weakly Supervised 3D Visual Grounding.](https://openaccess.thecvf.com/content/ICCV2023/html/Wang_Distilling_Coarse-to-Fine_Semantic_Matching_Knowledge_for_Weakly_Supervised_3D_Visual_ICCV_2023_paper.html)
-
-Zehan Wang\*, **Haifeng Huang\***, Yang Zhao, Linjun Li, Xize Cheng, Yichen Zhu, Aoxiong Yin, Zhou Zhao
-
-- The first weakly-supervised 3D visual grounding method.
-
-</div>
-</div>
-
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">NeurIPS 2022</div><img src='images/turn.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Towards Effective Multi-modal Interchanges in Zero-resource Sounding Object Localization.](https://proceedings.neurips.cc/paper_files/paper/2022/hash/f8de10c9ff056ae3d1eef43ad1762351-Abstract-Conference.html)
-
-Yang Zhao\*, Chen Zhang\*, **Haifeng Huang\***, Haoyuan Li, Zhou Zhao
-
-- A method for sounding object localization without training on any prior data in this field.
-
-</div>
-</div>
+<section id="publications" aria-labelledby="publications-heading">
+  <div class="section-heading">
+    <h2 id="publications-heading">Publications</h2>
+  </div>
+  <time data-scholar-updated datetime="{{ site.data.scholar_stats.updated }}" hidden></time>
+  {% assign selected_papers = site.data.publications | where: "selected", true %}
+  {% for paper in selected_papers %}
+    {% include publication.html paper=paper featured=true %}
+  {% endfor %}
+  {% assign other_papers = site.data.publications | where: "selected", false %}
+  <details class="more-publications">
+    <summary>More publications <span class="publication-count">{{ other_papers.size }}</span></summary>
+    <div class="publication-list">
+      {% for paper in other_papers %}
+        {% include publication.html paper=paper featured=false %}
+      {% endfor %}
+    </div>
+  </details>
+</section>
