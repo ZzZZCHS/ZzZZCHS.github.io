@@ -35,7 +35,7 @@
 <section id="service" aria-labelledby="service-heading">
   <h2 id="service-heading">Academic Service</h2>
   <p>
-    Conference Reviewer: ICML, ICLR, NeurIPS, CVPR, ECCV, AAAI<br>
+    Conference Reviewer: ICML, ICLR, NeurIPS, CVPR, ECCV, ICRA, AAAI<br>
     Journal Reviewer: TMLR, TIP, RA-L
   </p>
 </section>
