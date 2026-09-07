@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "Haifeng Huang's Homepage"
+title                    : "Haifeng Huang - Homepage"
 description              : "Haifeng Huang is a Computer Science Ph.D. student at Iowa State University researching efficient multimodal models, particularly Video LLMs, with prior work in 3D vision and embodied AI."
 url                      : "https://zzzzchs.github.io"
 baseurl                  : ""
