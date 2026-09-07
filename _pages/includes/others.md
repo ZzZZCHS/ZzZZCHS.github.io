@@ -1,16 +1,16 @@
 <section id="experience" aria-labelledby="experience-heading">
   <h2 id="experience-heading">Work Experience</h2>
   <div class="experience-entry">
-    <div class="entry-heading"><h3>ByteDance</h3><span class="entry-date">May – Aug 2025</span></div>
+    <div class="entry-heading"><h3>ByteDance</h3><span class="entry-date">May 2025 – Aug 2025</span></div>
     <p class="entry-role">Research Engineer <span>· Shanghai, China</span></p>
   </div>
   <div class="experience-entry">
-    <div class="entry-heading"><h3>Shanghai AI Laboratory · OpenRobotLab</h3><span class="entry-date">Feb 2024 – Mar 2025</span></div>
+    <div class="entry-heading"><h3>Shanghai AI Laboratory</h3><span class="entry-date">Feb 2024 – Mar 2025</span></div>
     <p class="entry-role">Research Intern <span>· Shanghai, China</span></p>
     <p class="entry-mentors">Mentors: Dr. Yilun Chen and Dr. Jiangmiao Pang</p>
   </div>
   <div class="experience-entry">
-    <div class="entry-heading"><h3>AMD</h3><span class="entry-date">Mar – Dec 2023</span></div>
+    <div class="entry-heading"><h3>AMD</h3><span class="entry-date">Mar 2023 – Jan 2024</span></div>
     <p class="entry-role">Research Intern <span>· Beijing, China</span></p>
     <p class="entry-mentors">Mentor: Dr. Tong Shen</p>
   </div>

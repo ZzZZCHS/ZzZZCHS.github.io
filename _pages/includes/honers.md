@@ -1,6 +1,6 @@
 <section id="honors" aria-labelledby="honors-heading" markdown="1">
 
-<h2 id="honors-heading">Honors &amp; Awards</h2>
+<h2 id="honors-heading">Competition Awards</h2>
 
 - **ICPC Asia Regional Contest:** Gold Medal and Silver Medal, 2019.
 - **National Olympiad in Informatics (NOI):** Bronze Medal, 2017.
