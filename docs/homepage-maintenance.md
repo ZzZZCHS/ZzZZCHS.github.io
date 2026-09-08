@@ -80,7 +80,15 @@ ID in the publication list and snapshots; missing IDs are otherwise treated as
 an incomplete response. Refresh the fallback file from a validated successful
 snapshot when updating homepage content.
 
-The collector uses `scholarly==1.7.11`. To run it locally:
+The collector uses `scholarly==1.7.11` with `bibtexparser==1.4.4`. Keep the
+BibTeX parser pinned while using this Scholar client: its unconstrained dependency
+otherwise installs bibtexparser 2.x, which removed the `bibtexparser.bibdatabase`
+module imported by scholarly. CI runs `pip check` and loads the real installed
+Scholar client in offline tests, so import incompatibilities fail before fetching.
+The tests mock only the client's network calls. Dependency and import failures
+remain errors, rather than being treated as a temporarily unavailable source.
+
+To run it locally:
 
 ```sh
 python -m pip install -r google_scholar_crawler/requirements.txt

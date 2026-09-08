@@ -32,8 +32,10 @@ jobs:
           cache: pip
           cache-dependency-path: google_scholar_crawler/requirements.txt
       - name: Install dependencies
-        run: python -m pip install -r google_scholar_crawler/requirements.txt
-      - name: Test snapshot validation
+        run: |
+          python -m pip install -r google_scholar_crawler/requirements.txt
+          python -m pip check
+      - name: Test installed Scholar client and snapshot validation
         run: python -m unittest discover -s google_scholar_crawler/tests -p 'test_*.py'
       - name: Load the last successful snapshot
         shell: bash

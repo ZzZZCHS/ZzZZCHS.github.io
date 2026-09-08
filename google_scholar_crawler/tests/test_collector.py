@@ -12,6 +12,42 @@ collector = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(collector)
 
 
+class ScholarClientTests(unittest.TestCase):
+    """Load the installed SDK, but replace its network calls for offline tests."""
+
+    def test_fetch_author_loads_client_and_fills_publications(self):
+        from scholarly import scholarly
+
+        author = {"scholar_id": "testProfile"}
+        papers = [{"author_pub_id": "testProfile:paper", "num_citations": 10}]
+
+        def fill_publications(profile, sections):
+            self.assertEqual(sections, ["publications"])
+            profile["publications"] = papers
+            return profile
+
+        with patch.object(scholarly, "search_author_id", return_value=author) as search, \
+                patch.object(scholarly, "fill", side_effect=fill_publications) as fill:
+            result = collector.fetch_author("testProfile")
+
+        search.assert_called_once_with("testProfile")
+        fill.assert_called_once_with(author, sections=["publications"])
+        self.assertEqual(result["publications"], papers)
+
+    def test_sdk_fetch_failures_are_reported_as_source_unavailability(self):
+        from scholarly import scholarly
+        from scholarly._proxy_generator import MaxTriesExceededException
+
+        for failing_call in ["search_author_id", "fill"]:
+            with self.subTest(failing_call=failing_call), \
+                    patch.object(scholarly, "search_author_id", return_value={}) as search, \
+                    patch.object(scholarly, "fill") as fill:
+                target = search if failing_call == "search_author_id" else fill
+                target.side_effect = MaxTriesExceededException("Cannot Fetch from Google Scholar.")
+                with self.assertRaises(collector.ScholarUnavailable):
+                    collector.fetch_author("testProfile")
+
+
 class SnapshotTests(unittest.TestCase):
     profile = "testProfile"
     previous = {"profile_id": profile, "publications": {"testProfile:paper": {"num_citations": 9}}}

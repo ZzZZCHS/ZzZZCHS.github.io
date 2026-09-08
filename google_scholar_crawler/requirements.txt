@@ -1,1 +1,3 @@
 scholarly==1.7.11
+# scholarly imports the v1 BibDatabase API removed in bibtexparser 2.x.
+bibtexparser==1.4.4
