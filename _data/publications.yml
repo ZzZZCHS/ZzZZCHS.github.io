@@ -67,11 +67,11 @@
 
 - id: "chat-3d"
   scholar_id: "oUm2gZUAAAAJ:qjMakFHDy7sC"
-  selected: false
+  selected: true
   title: "Data-Efficiently Learn Large Language Model for Universal 3D Scene Perception"
   alias: "Chat-3D · published version"
   authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Ziang Zhang, Tao Jin, Zhou Zhao"
-  venue: "Findings of NAACL · 2025"
+  venue: "NAACL · 2025"
   year: 2025
   paper: "https://aclanthology.org/2025.findings-naacl.18/"
   project: "https://chat-3d.github.io/"
@@ -100,7 +100,7 @@
 
 - id: "grounded-3d-llm"
   scholar_id: "oUm2gZUAAAAJ:kNdYIx-mwKoC"
-  selected: false
+  selected: true
   title: "Grounded 3D-LLM with Referent Tokens"
   authors: "Yilun Chen\\*, Shuai Yang\\*, **Haifeng Huang**\\*, Tai Wang, Ruiyuan Lyu, Runsen Xu, Dahua Lin, Jiangmiao Pang"
   venue: "arXiv · 2024"
@@ -176,7 +176,7 @@
   selected: false
   title: "Scene-robust Natural Language Video Localization via Learning Domain-invariant Representations"
   authors: "Zehan Wang, Yang Zhao, **Haifeng Huang**, Yan Xia, Zhou Zhao"
-  venue: "Findings of ACL · 2023"
+  venue: "ACL · 2023"
   year: 2023
   paper: "https://aclanthology.org/2023.findings-acl.11/"
 
