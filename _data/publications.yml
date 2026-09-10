@@ -118,7 +118,7 @@
   venue: "NeurIPS Datasets and Benchmarks · 2024"
   year: 2024
   paper: "https://arxiv.org/abs/2406.09401"
-  code: "https://github.com/rbler1234/MMScan"
+  code: "https://github.com/InternRobotics/EmbodiedScan"
   project: "https://taiwang.me/mmscan/"
 
 - id: "freebind"
