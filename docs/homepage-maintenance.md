@@ -18,6 +18,9 @@ text labels visible; the icons are decorative and hidden from screen readers.
 - Edit `_data/navigation.yml` for navigation and `_config.yml` for profile links.
 - Edit `_data/publications.yml` for publications. Set `selected: true` to show a
   contribution summary and thumbnail; other entries appear in the expandable list.
+  When selecting another paper, add its `image` path from `images/thumbnails/`
+  and optionally a short `summary`. A selected paper without an image uses the
+  full text width; missing summaries do not leave an empty paragraph.
   Keep entries in reverse publication-year order within each group. Published
   versions use the publisher's title, authors, venue, and year. Preprints should
   have `preprint: true` and an explicit arXiv venue label.
@@ -121,6 +124,7 @@ bundle exec jekyll build
 bundle exec jekyll serve --host 127.0.0.1
 ```
 
-Before publishing, check that the generated output has 18 publication articles
-(4 selected), working section anchors and local assets, and no private CV.
+Before publishing, check that the generated output has 18 publication articles,
+with the selected papers matching `_data/publications.yml`, working section
+anchors and local assets, and no private CV.
 The existing visitor map is retained. Analytics loads only when an ID is configured.

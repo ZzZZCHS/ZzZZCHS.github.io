@@ -1,5 +1,5 @@
 {% assign paper = include.paper %}
-<article class="publication{% if include.featured %} publication--featured{% endif %}" id="{{ paper.id }}" aria-labelledby="{{ paper.id }}-title">
+<article class="publication{% if include.featured and paper.image %} publication--featured{% endif %}" id="{{ paper.id }}" aria-labelledby="{{ paper.id }}-title">
   {% if include.featured and paper.image %}
   <a class="publication-image" href="{{ paper.paper }}" tabindex="-1" aria-hidden="true">
     <img src="{{ paper.image | relative_url }}" alt="" width="560" height="360" loading="lazy" decoding="async">
@@ -10,7 +10,7 @@
     <h3 id="{{ paper.id }}-title"><a href="{{ paper.paper }}">{{ paper.title }}</a></h3>
     {% if paper.alias %}<p class="publication-alias">{{ paper.alias }}</p>{% endif %}
     <div class="publication-authors">{{ paper.authors | markdownify }}</div>
-    {% if include.featured %}<p class="publication-summary">{{ paper.summary }}</p>{% endif %}
+    {% if include.featured and paper.summary %}<p class="publication-summary">{{ paper.summary }}</p>{% endif %}
     <ul class="publication-links" aria-label="Resources for {{ paper.id }}">
       <li><a href="{{ paper.paper }}">{% include icon.html name="paper" %} Paper</a></li>
       {% if paper.code %}<li><a href="{{ paper.code }}">{% include icon.html name="github" %} Code</a></li>{% endif %}

@@ -73,6 +73,7 @@
   authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Ziang Zhang, Tao Jin, Zhou Zhao"
   venue: "NAACL · 2025"
   year: 2025
+  image: "images/thumbnails/chat-3d.webp"
   paper: "https://aclanthology.org/2025.findings-naacl.18/"
   project: "https://chat-3d.github.io/"
   code: "https://github.com/Chat-3D/Chat-3D"
@@ -106,6 +107,7 @@
   venue: "arXiv · 2024"
   year: 2024
   preprint: true
+  image: "images/thumbnails/grounded-3d-llm.webp"
   paper: "https://arxiv.org/abs/2405.10370"
   project: "https://groundedscenellm.github.io/grounded_3d-llm.github.io/"
   code: "https://github.com/OpenRobotLab/Grounded_3D-LLM"
