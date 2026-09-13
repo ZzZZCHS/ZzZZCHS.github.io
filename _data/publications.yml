@@ -68,8 +68,7 @@
 - id: "chat-3d"
   scholar_id: "oUm2gZUAAAAJ:qjMakFHDy7sC"
   selected: true
-  title: "Data-Efficiently Learn Large Language Model for Universal 3D Scene Perception"
-  alias: "Chat-3D · published version"
+  title: "Chat-3D: Data-Efficiently Learn Large Language Model for Universal 3D Scene Perception"
   authors: "Zehan Wang\\*, **Haifeng Huang**\\*, Yang Zhao, Ziang Zhang, Tao Jin, Zhou Zhao"
   venue: "NAACL · 2025"
   year: 2025
