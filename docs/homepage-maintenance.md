@@ -66,13 +66,14 @@ only the minimal JSON snapshot to the statistics branch, preserving its history.
 It does not publish the source checkout or any local reference documents.
 
 Scholar may block automated requests or return a CAPTCHA. The collector returns
-exit code 75 for `MaxTriesExceededException`. The workflow also limits each fetch
+exit code 75 for `MaxTriesExceededException` and empty or incomplete publication
+responses. Missing publication IDs are listed in the log for diagnosis. The workflow also limits each fetch
 to 90 seconds because the library's retries can outlast its per-request timeout.
-Either source unavailability or that deadline produces a warning and an explicit
+Source unavailability, an incomplete response, or that deadline produces a warning and an explicit
 "refresh skipped" summary. The publish step is skipped, so neither counts nor
 timestamps change. A green workflow can therefore mean the run completed without
-a refresh; consult its summary. Invalid data, incomplete responses, code errors,
-and publishing failures still fail the workflow.
+a refresh; consult its summary. Invalid counts or IDs, profile mismatches, duplicate IDs, code errors, and
+publishing failures still fail the workflow.
 
 Direct scraping remains best-effort and may continue to be blocked on GitHub-hosted
 runners. This failure handling does not guarantee that automatic refreshes succeed.

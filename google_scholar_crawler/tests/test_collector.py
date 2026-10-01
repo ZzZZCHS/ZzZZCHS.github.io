@@ -121,6 +121,30 @@ class SnapshotTests(unittest.TestCase):
             self.assertEqual(target.read_text(), original)
             self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06")
 
+    def test_incomplete_response_skips_refresh_without_changing_files(self):
+        for papers in [[], [{"author_pub_id": "testProfile:new", "num_citations": 3}]]:
+            for existing in [False, True]:
+                with self.subTest(papers=papers, existing=existing), tempfile.TemporaryDirectory() as directory:
+                    target = Path(directory) / "output.json"
+                    original = '{"updated":"old","publications":{}}\n'
+                    if existing:
+                        target.write_text(original)
+                    author = {"scholar_id": self.profile, "publications": papers}
+                    code, target = self.run_collector(directory, author=author)
+                    self.assertEqual(code, collector.FETCH_UNAVAILABLE)
+                    if existing:
+                        self.assertEqual(target.read_text(), original)
+                    else:
+                        self.assertFalse(target.exists())
+                    self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06")
+
+    def test_incomplete_response_reports_missing_ids(self):
+        author = {"scholar_id": self.profile, "publications": [
+            {"author_pub_id": "testProfile:new", "num_citations": 3}
+        ]}
+        with self.assertRaisesRegex(collector.IncompleteScholarResponse, "testProfile:paper"):
+            collector.build_snapshot(author, self.profile, self.previous)
+
     def test_success_writes_a_valid_snapshot(self):
         with tempfile.TemporaryDirectory() as directory:
             code, target = self.run_collector(directory, author=self.author(10))

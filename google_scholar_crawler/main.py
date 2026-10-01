@@ -15,6 +15,10 @@ class ScholarUnavailable(RuntimeError):
     """The source could not be reached; this does not mean its citation counts changed."""
 
 
+class IncompleteScholarResponse(ValueError):
+    """Scholar omitted publications; retain the last complete snapshot."""
+
+
 def fetch_author(profile_id):
     from scholarly import scholarly
     from scholarly._proxy_generator import MaxTriesExceededException
@@ -50,10 +54,14 @@ def build_snapshot(author, profile_id, previous):
         publications[paper_id] = {"num_citations": citations}
 
     if not publications:
-        raise ValueError("Scholar returned no publications; the previous snapshot is retained.")
+        raise IncompleteScholarResponse("Scholar returned no publications; the previous snapshot is retained.")
     missing = set(previous.get("publications", {})) - set(publications)
     if missing:
-        raise ValueError(f"Incomplete Scholar response; missing {len(missing)} previous publications.")
+        raise IncompleteScholarResponse(
+            f"Incomplete Scholar response; missing {len(missing)} previous publications: "
+            + ", ".join(sorted(missing))
+            + ". If this persists, check for papers merged or removed on Scholar."
+        )
 
     return {
         "profile_id": profile_id,
@@ -80,11 +88,11 @@ def main(argv=None):
 
     try:
         author = fetch_author(profile_id)
-    except ScholarUnavailable as error:
+        snapshot = build_snapshot(author, profile_id, previous)
+    except (ScholarUnavailable, IncompleteScholarResponse) as error:
         print(f"Citation refresh skipped: {error} Existing counts and timestamp are unchanged.", file=sys.stderr)
         return FETCH_UNAVAILABLE
 
-    snapshot = build_snapshot(author, profile_id, previous)
     save_snapshot(snapshot, args.output)
     print(f"Saved citation counts for {len(snapshot['publications'])} papers at {snapshot['updated']}.")
     return 0
