@@ -1,24 +1,24 @@
 {
   "profile_id": "oUm2gZUAAAAJ",
-  "updated": "2026-09-29T05:43:37+00:00",
+  "updated": "2026-10-04T05:32:04+00:00",
   "publications": {
     "oUm2gZUAAAAJ:WF5omc3nYNoC": {
-      "num_citations": 283
+      "num_citations": 288
     },
     "oUm2gZUAAAAJ:qjMakFHDy7sC": {
-      "num_citations": 168
+      "num_citations": 169
     },
     "oUm2gZUAAAAJ:kNdYIx-mwKoC": {
-      "num_citations": 138
+      "num_citations": 140
     },
     "oUm2gZUAAAAJ:Wp0gIr-vW9MC": {
-      "num_citations": 91
+      "num_citations": 92
     },
     "oUm2gZUAAAAJ:TFP_iSt0sucC": {
-      "num_citations": 70
+      "num_citations": 74
     },
     "oUm2gZUAAAAJ:KlAtU1dfN6UC": {
-      "num_citations": 52
+      "num_citations": 54
     },
     "oUm2gZUAAAAJ:2osOgNQ5qMEC": {
       "num_citations": 41
@@ -27,19 +27,19 @@
       "num_citations": 40
     },
     "oUm2gZUAAAAJ:UeHWp8X0CEIC": {
-      "num_citations": 34
+      "num_citations": 35
+    },
+    "oUm2gZUAAAAJ:MXK_kJrjxJIC": {
+      "num_citations": 33
     },
     "oUm2gZUAAAAJ:mVmsd5A6BfQC": {
       "num_citations": 32
     },
-    "oUm2gZUAAAAJ:MXK_kJrjxJIC": {
-      "num_citations": 32
-    },
     "oUm2gZUAAAAJ:4DMP91E08xMC": {
-      "num_citations": 29
+      "num_citations": 31
     },
     "oUm2gZUAAAAJ:isC4tDSrTZIC": {
-      "num_citations": 26
+      "num_citations": 27
     },
     "oUm2gZUAAAAJ:u5HHmVD_uO8C": {
       "num_citations": 13
@@ -47,7 +47,7 @@
     "oUm2gZUAAAAJ:d1gkVwhDpl0C": {
       "num_citations": 7
     },
-    "oUm2gZUAAAAJ:bEWYMUwI8FkC": {
+    "oUm2gZUAAAAJ:maZDTaKrznsC": {
       "num_citations": 4
     },
     "oUm2gZUAAAAJ:e5wmG9Sq2KIC": {
@@ -55,6 +55,10 @@
     },
     "oUm2gZUAAAAJ:5nxA0vEk-isC": {
       "num_citations": 2
+    },
+    "oUm2gZUAAAAJ:bEWYMUwI8FkC": {
+      "num_citations": 4,
+      "updated": "2026-09-29T05:43:37+00:00"
     }
   }
 }
