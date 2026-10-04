@@ -3,6 +3,9 @@ import argparse
 import json
 import os
 import sys
+import time
+from contextlib import contextmanager
+from urllib.parse import urlsplit
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -17,6 +20,84 @@ class ScholarUnavailable(RuntimeError):
 
 class IncompleteScholarResponse(ValueError):
     """Scholar omitted publications; retain the last complete snapshot."""
+
+
+def diagnostic_endpoint(url):
+    """Omit query strings, user info, fragments, and arbitrary redirect paths."""
+    parsed = urlsplit(str(url))
+    path = parsed.path
+    route = path if path in ("/citations", "/scholar", "/sorry/index", "/sorry/") else "/[other]"
+    return {"host": parsed.hostname, "route": route}
+
+
+def response_diagnostic(response):
+    from bs4 import BeautifulSoup
+
+    content_type = response.headers.get("content-type", "").split(";", 1)[0].lower()
+    kind = "non_html"
+    canonical = False
+    if "html" in content_type:
+        # Classify locally. Never serialize HTML, titles, headers, or cookies.
+        soup = BeautifulSoup(response.text, "html.parser")
+        canonical = soup.find("link", rel="canonical") is not None
+        body = response.text.lower()
+        if any(marker in body for marker in ("g-recaptcha", "h-captcha", 'id="captcha"', "recaptcha/api")):
+            kind = "captcha"
+        elif "unusual traffic" in body or "automated queries" in body:
+            kind = "automated_traffic_block"
+        elif response.url.host == "consent.google.com":
+            kind = "consent"
+        elif soup.find(id="gsc_prf") is not None or soup.find(id="gsc_a_b") is not None:
+            kind = "scholar_profile"
+        else:
+            kind = "unexpected_html"
+    return {"status": response.status_code, **diagnostic_endpoint(response.url),
+            "page_type": kind, "canonical_present": canonical}
+
+
+@contextmanager
+def trace_scholar_requests():
+    """Observe the pinned SDK's HTTPX requests, including replacement sessions."""
+    import httpx
+
+    original = httpx.Client.send
+    sequence = 0
+
+    def emit(record):
+        print("Scholar HTTP diagnostic: " + json.dumps(record), file=sys.stderr, flush=True)
+
+    def send(client, request, *args, **kwargs):
+        nonlocal sequence
+        sequence += 1
+        request_id = sequence
+        started = time.monotonic()
+        emit({"event": "request", "request_id": request_id, **diagnostic_endpoint(request.url)})
+        try:
+            response = original(client, request, *args, **kwargs)
+        except Exception as error:
+            # Exception messages can include credentials, proxy URLs, or response HTML.
+            emit({"event": "error", "request_id": request_id,
+                  "error_type": type(error).__name__,
+                  "elapsed_seconds": round(time.monotonic() - started, 2)})
+            raise
+        try:
+            details = response_diagnostic(response)
+            redirects = [{"status": item.status_code, **diagnostic_endpoint(item.url)}
+                         for item in response.history]
+            emit({"event": "response", "request_id": request_id, **details,
+                  "redirects": redirects, "elapsed_seconds": round(time.monotonic() - started, 2)})
+        except Exception as error:
+            # Observability must never change the fetch result (e.g. streamed responses).
+            emit({"event": "diagnostic_error", "request_id": request_id,
+                  "status": response.status_code, "error_type": type(error).__name__})
+        return response
+
+    # The collector is single-threaded; always restore the SDK's transport method.
+    httpx.Client.send = send
+    try:
+        yield
+    finally:
+        httpx.Client.send = original
 
 
 def fetch_author(profile_id):
@@ -126,7 +207,8 @@ def main(argv=None):
     profile_id = os.environ.get("GOOGLE_SCHOLAR_ID") or DEFAULT_PROFILE
 
     try:
-        author = fetch_author(profile_id)
+        with trace_scholar_requests():
+            author = fetch_author(profile_id)
         snapshot = build_refresh_snapshot(author, profile_id, previous)
     except (ScholarUnavailable, IncompleteScholarResponse) as error:
         print(f"Citation refresh skipped: {error} Existing counts and timestamp are unchanged.", file=sys.stderr)

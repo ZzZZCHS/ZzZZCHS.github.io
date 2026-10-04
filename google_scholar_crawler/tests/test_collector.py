@@ -12,6 +12,64 @@ collector = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(collector)
 
 
+class DiagnosticTests(unittest.TestCase):
+    def test_page_classification_and_sensitive_data_redaction(self):
+        import httpx
+
+        for html, kind, canonical in [
+            ('<div class="g-recaptcha"></div>', "captcha", False),
+            ('Our systems have detected unusual traffic', "automated_traffic_block", False),
+            ('<link rel="canonical" href="private"><div id="gsc_prf"></div>', "scholar_profile", True),
+            ('<title>private title</title>', "unexpected_html", False),
+        ]:
+            with self.subTest(kind=kind):
+                response = httpx.Response(200, text=html, headers={"content-type": "text/html"},
+                    request=httpx.Request("GET", "https://scholar.google.com/citations?secret=private"))
+                result = collector.response_diagnostic(response)
+                self.assertEqual(result["page_type"], kind)
+                self.assertEqual(result["canonical_present"], canonical)
+                self.assertNotIn("private", json.dumps(result))
+
+    def test_redirect_status_and_request_logging(self):
+        import httpx
+
+        def handle(request):
+            if request.url.host == "scholar.google.com":
+                return httpx.Response(302, headers={"location": "https://consent.google.com/private?token=secret"})
+            return httpx.Response(403, text="sensitive body", headers={"content-type": "text/html", "set-cookie": "secret"})
+
+        original = httpx.Client.send
+        logs = io.StringIO()
+        with contextlib.redirect_stderr(logs), collector.trace_scholar_requests():
+            with httpx.Client(transport=httpx.MockTransport(handle), follow_redirects=True) as client:
+                response = client.get("https://scholar.google.com/citations?user=secret", headers={"Cookie": "secret"})
+                self.assertEqual(response.status_code, 403)
+        self.assertIs(httpx.Client.send, original)
+        records = [json.loads(line.split(": ", 1)[1]) for line in logs.getvalue().splitlines()]
+        self.assertEqual(records[0]["event"], "request")
+        self.assertEqual(records[-1]["status"], 403)
+        self.assertEqual(records[-1]["page_type"], "consent")
+        self.assertEqual(records[-1]["redirects"][0]["status"], 302)
+        for private in ["secret", "sensitive body", "/private", "Cookie"]:
+            self.assertNotIn(private, logs.getvalue())
+
+    def test_network_error_is_logged_and_reraised_without_message(self):
+        import httpx
+
+        def handle(request):
+            raise httpx.ConnectError("secret proxy credentials", request=request)
+
+        original = httpx.Client.send
+        logs = io.StringIO()
+        with contextlib.redirect_stderr(logs):
+            with self.assertRaises(httpx.ConnectError), collector.trace_scholar_requests():
+                with httpx.Client(transport=httpx.MockTransport(handle)) as client:
+                    client.get("https://scholar.google.com/citations")
+        self.assertIs(httpx.Client.send, original)
+        self.assertIn('"error_type": "ConnectError"', logs.getvalue())
+        self.assertNotIn("secret", logs.getvalue())
+
+
 class ScholarClientTests(unittest.TestCase):
     """Load the installed SDK, but replace its network calls for offline tests."""
 

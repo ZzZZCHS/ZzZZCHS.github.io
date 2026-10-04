@@ -83,6 +83,20 @@ and summary. Direct scraping remains best-effort, so automatic fresh counts are
 not guaranteed. Until a successful refresh, the homepage uses the checked-in
 fallback. Refresh the fallback from a validated snapshot when updating content.
 
+Each fetch emits flushed `Scholar HTTP diagnostic` JSON lines before and after
+HTTPX requests, including sessions recreated by the pinned Scholar SDK. They show
+HTTP status, redirect status/host/route, elapsed time, canonical-link presence,
+and a heuristic page type (profile, CAPTCHA, automated-traffic block, consent,
+unexpected HTML, or non-HTML). Network failures report only the exception class.
+A request without a response/error before the workflow deadline indicates an
+interrupted request; it is not proof of a CAPTCHA. A 403/429 indicates refusal or
+rate limiting but does not identify the server's underlying policy.
+
+Diagnostics intentionally omit query strings, arbitrary URL paths, credentials,
+headers/cookies, page titles, and HTML. They live in the Actions fetch log, not the
+public citation JSON. No extra network probes are sent and retry behavior stays
+unchanged. The transport wrapper is restored even when fetching fails.
+
 The collector uses `scholarly==1.7.11` with `bibtexparser==1.4.4`. Keep the
 BibTeX parser pinned while using this Scholar client: its unconstrained dependency
 otherwise installs bibtexparser 2.x, which removed the `bibtexparser.bibdatabase`
