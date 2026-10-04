@@ -21,7 +21,7 @@
     {% assign show_citations = false %}
     {% if scholar_entry and scholar_entry.num_citations >= 10 %}{% assign show_citations = true %}{% endif %}
     <div class="publication-metrics" aria-label="Publication metrics"{% unless show_citations or paper.code %} hidden{% endunless %}>
-      <a class="scholar-citations" data-scholar-id="{{ paper.scholar_id }}" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user={{ site.data.scholar_stats.profile_id }}&amp;citation_for_view={{ paper.scholar_id | url_encode }}" title="Google Scholar citations · updated {{ site.data.scholar_stats.updated | date: '%b %d, %Y' }}"{% unless show_citations %} hidden{% endunless %}>
+      <a class="scholar-citations" data-scholar-id="{{ paper.scholar_id }}" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user={{ site.data.scholar_stats.profile_id }}&amp;citation_for_view={{ paper.scholar_id | url_encode }}" title="Google Scholar citations · updated {{ scholar_entry.updated | default: site.data.scholar_stats.updated | date: '%b %d, %Y' }}"{% unless show_citations %} hidden{% endunless %}>
         <span>Citations</span><span class="citation-count">{% if scholar_entry %}{{ scholar_entry.num_citations }}{% else %}—{% endif %}</span>
       </a>
       {% if paper.code %}

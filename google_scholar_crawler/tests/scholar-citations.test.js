@@ -116,3 +116,21 @@ test("failed star badge keeps a usable text link, including repeated errors", as
   image.parentElement = null;
   assert.doesNotThrow(onError);
 });
+
+
+test("retained papers display their original date while other counts refresh", async () => {
+  const data = snapshot();
+  data.publications["profile:first"] = { num_citations: 15, updated: "2026-08-01T00:00:00Z" };
+  const result = await render(response(data));
+  assert.deepEqual(result.counts, ["15", "1,234"]);
+  assert.match(result.links[0].title, /Aug 1, 2026/);
+  assert.match(result.links[1].title, /Sep 6, 2026/);
+});
+
+test("rejects invalid and future per-paper dates", async () => {
+  for (const updated of ["invalid", "2026-09-07T00:00:00Z"]) {
+    const data = snapshot();
+    data.publications["profile:first"].updated = updated;
+    assertFallback(await render(response(data)));
+  }
+});

@@ -1,4 +1,4 @@
-"""Fetch a complete Scholar snapshot; never replace good data with a partial response."""
+"""Refresh Scholar counts, preserving missing papers with their original dates."""
 import argparse
 import json
 import os
@@ -32,6 +32,17 @@ def fetch_author(profile_id):
         raise ScholarUnavailable(
             "Google Scholar could not be fetched. Automated access may be blocked or unavailable."
         ) from error
+    except AttributeError as error:
+        # scholarly 1.7.11 assumes every response has a canonical profile link.
+        # Match that exact failure site; unrelated parser/programming bugs still fail.
+        import traceback
+        frames = traceback.extract_tb(error.__traceback__)
+        if (str(error) == "'NoneType' object has no attribute 'get'"
+                and any(Path(frame.filename).name == "author_parser.py"
+                        and frame.name == "fill"
+                        and 'rel="canonical"' in (frame.line or "") for frame in frames)):
+            raise ScholarUnavailable("Scholar returned a page without canonical profile metadata.") from error
+        raise
     return author
 
 
@@ -70,6 +81,34 @@ def build_snapshot(author, profile_id, previous):
     }
 
 
+def build_refresh_snapshot(author, profile_id, previous):
+    """Keep a missing paper's count and date without blocking other papers."""
+    try:
+        return build_snapshot(author, profile_id, previous)
+    except IncompleteScholarResponse:
+        # Empty results remain unavailable; validate all returned records first.
+        current = build_snapshot(author, profile_id, {})
+        if previous.get("profile_id") != profile_id:
+            raise ValueError("The previous snapshot belongs to another profile.")
+        for paper_id, entry in previous.get("publications", {}).items():
+            if paper_id in current["publications"]:
+                continue
+            date = entry.get("updated", previous.get("updated"))
+            if (not paper_id.startswith(profile_id + ":")
+                    or type(entry.get("num_citations")) is not int
+                    or entry["num_citations"] < 0):
+                raise ValueError("Invalid cached publication.")
+            parsed = datetime.fromisoformat(date)
+            if parsed.tzinfo is None or parsed > datetime.now(timezone.utc):
+                raise ValueError("Invalid cached publication date.")
+            current["publications"][paper_id] = {
+                "num_citations": entry["num_citations"], "updated": date,
+            }
+            print(f"Retained missing paper {paper_id} with its original date {date}. "
+                  "Check for a merged or removed Scholar entry if this persists.", file=sys.stderr)
+        return current
+
+
 def save_snapshot(snapshot, destination):
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -88,7 +127,7 @@ def main(argv=None):
 
     try:
         author = fetch_author(profile_id)
-        snapshot = build_snapshot(author, profile_id, previous)
+        snapshot = build_refresh_snapshot(author, profile_id, previous)
     except (ScholarUnavailable, IncompleteScholarResponse) as error:
         print(f"Citation refresh skipped: {error} Existing counts and timestamp are unchanged.", file=sys.stderr)
         return FETCH_UNAVAILABLE

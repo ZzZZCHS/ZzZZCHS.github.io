@@ -65,24 +65,23 @@ public. The workflow uses its repository token with `contents: write` to publish
 only the minimal JSON snapshot to the statistics branch, preserving its history.
 It does not publish the source checkout or any local reference documents.
 
-Scholar may block automated requests or return a CAPTCHA. The collector returns
-exit code 75 for `MaxTriesExceededException` and empty or incomplete publication
-responses. Missing publication IDs are listed in the log for diagnosis. The workflow also limits each fetch
-to 90 seconds because the library's retries can outlast its per-request timeout.
-Source unavailability, an incomplete response, or that deadline produces a warning and an explicit
-"refresh skipped" summary. The publish step is skipped, so neither counts nor
-timestamps change. A green workflow can therefore mean the run completed without
-a refresh; consult its summary. Invalid counts or IDs, profile mismatches, duplicate IDs, code errors, and
-publishing failures still fail the workflow.
+Scholar may block automated requests or return an unexpected page. Exit code 75
+covers exhausted requests, empty publication responses, and the specific SDK
+failure caused by missing canonical profile metadata. The 90-second deadline also
+skips a refresh. These cases retain all existing counts and dates. Other parser
+bugs, invalid counts/IDs, profile mismatches, and publishing errors still fail.
 
-Direct scraping remains best-effort and may continue to be blocked on GitHub-hosted
-runners. This failure handling does not guarantee that automatic refreshes succeed.
-The page keeps the last available numbers and their original tooltip dates, never
-replacing unavailable data with zeros. Until the first successful run, it uses the
-checked-in fallback. If a paper is merged or removed on Scholar, deliberately reconcile its
-ID in the publication list and snapshots; missing IDs are otherwise treated as
-an incomplete response. Refresh the fallback file from a validated successful
-snapshot when updating homepage content.
+A nonempty, valid response updates the papers it contains. Papers omitted by Scholar
+retain their previous counts and an explicit per-paper `updated` timestamp. The
+frontend and server-rendered tooltip use that date rather than the snapshot date;
+repeated omissions never advance it. When a paper reappears, its count updates
+normally. Missing IDs are logged. If a paper was merged or removed on Scholar,
+reconcile its ID in the publication metadata rather than guessing a replacement.
+
+A green workflow can mean a skipped, partial, or complete refresh; consult its log
+and summary. Direct scraping remains best-effort, so automatic fresh counts are
+not guaranteed. Until a successful refresh, the homepage uses the checked-in
+fallback. Refresh the fallback from a validated snapshot when updating content.
 
 The collector uses `scholarly==1.7.11` with `bibtexparser==1.4.4`. Keep the
 BibTeX parser pinned while using this Scholar client: its unconstrained dependency

@@ -48,6 +48,23 @@ class ScholarClientTests(unittest.TestCase):
                     collector.fetch_author("testProfile")
 
 
+    def test_real_parser_missing_canonical_page_is_unavailable(self):
+        from scholarly import scholarly
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup("<html><body>Temporarily unavailable</body></html>", "html.parser")
+        with patch.object(scholarly._Scholarly__nav, "_get_soup", return_value=soup):
+            with self.assertRaisesRegex(collector.ScholarUnavailable, "canonical"):
+                collector.fetch_author("testProfile")
+
+    def test_unrelated_attribute_error_is_not_hidden(self):
+        from scholarly import scholarly
+
+        with patch.object(scholarly, "search_author_id", side_effect=AttributeError("parser bug")):
+            with self.assertRaisesRegex(AttributeError, "parser bug"):
+                collector.fetch_author("testProfile")
+
+
 class SnapshotTests(unittest.TestCase):
     profile = "testProfile"
     previous = {"profile_id": profile, "publications": {"testProfile:paper": {"num_citations": 9}}}
@@ -103,7 +120,7 @@ class SnapshotTests(unittest.TestCase):
 
     def run_collector(self, directory, author=None, error=None):
         previous = Path(directory) / "previous.json"
-        previous.write_text(json.dumps({**self.previous, "updated": "2026-09-06"}))
+        previous.write_text(json.dumps({**self.previous, "updated": "2026-09-06T00:00:00+00:00"}))
         target = Path(directory) / "output.json"
         with patch.dict(collector.os.environ, {"GOOGLE_SCHOLAR_ID": self.profile}), \
                 patch.object(collector, "fetch_author", return_value=author, side_effect=error), \
@@ -114,15 +131,15 @@ class SnapshotTests(unittest.TestCase):
     def test_unavailable_source_returns_a_distinct_status_and_preserves_files(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "output.json"
-            original = '{"updated": "2026-09-06", "existing": true}\n'
+            original = '{"updated": "2026-09-06T00:00:00+00:00", "existing": true}\n'
             target.write_text(original)
             code, target = self.run_collector(directory, error=collector.ScholarUnavailable("unavailable"))
             self.assertEqual(code, 75)
             self.assertEqual(target.read_text(), original)
-            self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06")
+            self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06T00:00:00+00:00")
 
     def test_incomplete_response_skips_refresh_without_changing_files(self):
-        for papers in [[], [{"author_pub_id": "testProfile:new", "num_citations": 3}]]:
+        for papers in [[]]:
             for existing in [False, True]:
                 with self.subTest(papers=papers, existing=existing), tempfile.TemporaryDirectory() as directory:
                     target = Path(directory) / "output.json"
@@ -136,7 +153,7 @@ class SnapshotTests(unittest.TestCase):
                         self.assertEqual(target.read_text(), original)
                     else:
                         self.assertFalse(target.exists())
-                    self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06")
+                    self.assertEqual(json.loads((Path(directory) / "previous.json").read_text())["updated"], "2026-09-06T00:00:00+00:00")
 
     def test_incomplete_response_reports_missing_ids(self):
         author = {"scholar_id": self.profile, "publications": [
@@ -144,6 +161,31 @@ class SnapshotTests(unittest.TestCase):
         ]}
         with self.assertRaisesRegex(collector.IncompleteScholarResponse, "testProfile:paper"):
             collector.build_snapshot(author, self.profile, self.previous)
+
+    def test_partial_refresh_keeps_original_date_across_repeated_misses_and_recovers(self):
+        previous = {**self.previous, "updated": "2026-09-06T00:00:00+00:00"}
+        partial = {"scholar_id": self.profile, "publications": [
+            {"author_pub_id": "testProfile:new", "num_citations": 3}
+        ]}
+        for _ in range(2):
+            previous = collector.build_refresh_snapshot(partial, self.profile, previous)
+            self.assertEqual(previous["publications"]["testProfile:paper"], {
+                "num_citations": 9, "updated": "2026-09-06T00:00:00+00:00"
+            })
+            self.assertEqual(previous["publications"]["testProfile:new"], {"num_citations": 3})
+        partial["publications"].extend(self.author(12)["publications"])
+        result = collector.build_refresh_snapshot(partial, self.profile, previous)
+        self.assertEqual(result["publications"]["testProfile:paper"], {"num_citations": 12})
+
+    def test_partial_refresh_is_written(self):
+        with tempfile.TemporaryDirectory() as directory:
+            author = {"scholar_id": self.profile, "publications": [
+                {"author_pub_id": "testProfile:new", "num_citations": 3}
+            ]}
+            code, target = self.run_collector(directory, author=author)
+            self.assertEqual(code, 0)
+            self.assertEqual(json.loads(target.read_text())["publications"]["testProfile:paper"]["updated"],
+                             "2026-09-06T00:00:00+00:00")
 
     def test_success_writes_a_valid_snapshot(self):
         with tempfile.TemporaryDirectory() as directory:

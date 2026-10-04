@@ -1,4 +1,4 @@
-/* Keep server-rendered counts when the source is unavailable or incomplete. */
+/* Preserve each count's actual observation date, including retained papers. */
 (function () {
   "use strict";
 
@@ -33,18 +33,21 @@
         timestamp < lastUpdated || timestamp > Date.now() + 5 * 60 * 1000 ||
         !data.publications || typeof data.publications !== "object") return;
 
-    // Reject partial responses rather than displaying mixed-age counts as fresh.
+    // Every displayed paper needs a valid count and observation date.
     var entries = citations.map(function (link) {
       return data.publications[link.dataset.scholarId];
     });
     if (!entries.every(function (entry) {
-      return entry && Number.isSafeInteger(entry.num_citations) && entry.num_citations >= 0;
+      var observed = entry && Date.parse(entry.updated || data.updated);
+      return entry && Number.isSafeInteger(entry.num_citations) && entry.num_citations >= 0 &&
+        Number.isFinite(observed) && observed <= timestamp;
     })) return;
 
     var date = dateFormatter.format(new Date(timestamp));
     citations.forEach(function (link, index) {
       link.querySelector(".citation-count").textContent = formatter.format(entries[index].num_citations);
-      link.title = "Google Scholar citations · updated " + date;
+      link.title = "Google Scholar citations · updated " +
+        dateFormatter.format(new Date(entries[index].updated || data.updated));
       link.hidden = entries[index].num_citations < 10;
       var metrics = link.parentElement;
       metrics.hidden = link.hidden && !metrics.querySelector(".github-stars");

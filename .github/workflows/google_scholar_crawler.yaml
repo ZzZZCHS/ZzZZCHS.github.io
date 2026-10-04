@@ -55,7 +55,7 @@ jobs:
         run: |
           set -euo pipefail
           # scholarly's internal retries can outlast its per-request timeout.
-          # Exit 75 means the source was unavailable or incomplete; 124 is this explicit deadline.
+          # Exit 75 means the source was unavailable or empty; 124 is this explicit deadline.
           status=0
           timeout 90s python google_scholar_crawler/main.py \
             --previous "$RUNNER_TEMP/scholar-previous.json" \
@@ -63,12 +63,12 @@ jobs:
           case "$status" in
             0)
               echo "refreshed=true" >> "$GITHUB_OUTPUT"
-              echo "Citation refresh succeeded. A validated snapshot is ready for publication." >> "$GITHUB_STEP_SUMMARY"
+              echo "Citation snapshot ready for publication. Returned papers were refreshed; any missing papers retain their original counts and per-paper dates (see fetch log)." >> "$GITHUB_STEP_SUMMARY"
               ;;
             75|124)
               echo "refreshed=false" >> "$GITHUB_OUTPUT"
-              echo "::warning::Google Scholar was unavailable, incomplete, or timed out. Citations were not refreshed; existing counts and timestamp are retained."
-              echo "Citation refresh skipped: Google Scholar was unavailable, returned an incomplete response, or exceeded the 90-second deadline. See the fetch log for details. Existing counts and timestamp are retained. The next scheduled run will try again." >> "$GITHUB_STEP_SUMMARY"
+              echo "::warning::Google Scholar was unavailable, empty, or timed out. Citations were not refreshed; existing counts and timestamp are retained."
+              echo "Citation refresh skipped: Google Scholar was unavailable, returned an empty response, or exceeded the 90-second deadline. See the fetch log for details. Existing counts and timestamp are retained. The next scheduled run will try again." >> "$GITHUB_STEP_SUMMARY"
               ;;
             *) exit "$status" ;;
           esac
