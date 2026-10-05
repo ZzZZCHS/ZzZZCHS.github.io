@@ -36,6 +36,6 @@
   <h2 id="service-heading">Academic Service</h2>
   <p>
     Conference Reviewer: ICML, ICLR, NeurIPS, CVPR, ECCV, ICRA, AAAI<br>
-    Journal Reviewer: TMLR, TIP, RA-L
+    Journal Reviewer: TMLR, TIP, TMM, RA-L
   </p>
 </section>
